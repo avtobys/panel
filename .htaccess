@@ -1,0 +1,36 @@
+DirectoryIndex index.php
+AddDefaultCharset UTF-8
+Options -Indexes
+
+<ifModule mod_headers.c>
+    <FilesMatch ".(flv|gif|jpg|jpeg|png|ico|swf|js|css|pdf)$">
+    Header set Cache-Control "max-age=2592000"
+        </FilesMatch>
+</IfModule>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule .* https://%{SERVER_NAME}%1 [R=301,L]
+
+RewriteCond %{THE_REQUEST} //
+RewriteRule .* https://%{SERVER_NAME}/$0 [R=301,L]
+
+RewriteCond %{REQUEST_URI} ^(.+)/index\.(php|html)
+RewriteRule ^(.+)/index\.(php|html)([^/]*)$ https://%{SERVER_NAME}/$1 [R=301,L]
+
+RewriteCond %{THE_REQUEST} /index\.(php|html)
+RewriteRule ^index\.(php|html)([^/]*)$ https://%{SERVER_NAME}/ [R=301,L]
+
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . /index.php [L]
+
+RewriteCond %{REQUEST_URI} ^(.+)\.php
+RewriteRule . /index.php [L]
+
+</IfModule>

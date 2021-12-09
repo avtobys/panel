@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Oswald', sans-serif;
+}
+
+#sign-menu {
+    min-width: 300px;
+}
+
+#sign-menu>form:not(:first-child) {
+    display: none;
+}
+
+.dropdown-menu-right i.fa-sort-up {
+    position: absolute;
+    top: -12px;
+    right: 7px;
+    font-size: 35px;
+    color: #fff;
+}
+
+.toast {
+    min-width: 300px;
+}
+
+.form-group .fa-eye,
+.form-group .fa-eye-slash {
+    cursor: pointer;
+}
