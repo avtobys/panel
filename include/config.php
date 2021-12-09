@@ -54,8 +54,3 @@ $sql_create_table_users = 'CREATE TABLE IF NOT EXISTS `users` (
   KEY `email_md5password` (`email`,`md5password`) USING BTREE
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8';
 
-
-
-if ($_SERVER['SCRIPT_NAME'] != '/index.php') {
-  require dirname(__DIR__) . '/tpl/404.php';
-}
