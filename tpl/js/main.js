@@ -31,6 +31,9 @@ $(".navbar a").each(function (i, el) {
 
 $(document).on("click", "[data-modal]", function (e) {
     e.preventDefault();
+    if ($(this).attr("lock"))
+        return false;
+    $(this).attr("data-lock", 1);
     let id = $(this).data("modal");
     $.get("/api/modal/" + id,
         function (data) {
@@ -39,6 +42,8 @@ $(document).on("click", "[data-modal]", function (e) {
             $("#" + id).modal();
             $("#" + id).on("hidden.bs.modal", function () {
                 $(this).remove();
+                $(".modal-backdrop").remove();
+                $("[data-modal=" + id + "]").removeAttr("data-lock");
             });
         },
         "html"
