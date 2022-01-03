@@ -31,6 +31,7 @@ $_SESSION['user_id'] = empty($_SESSION['user_id']) ? 0 : $_SESSION['user_id'];
 $_SESSION['user_id'] && !empty($_COOKIE['UID']) && ($_SESSION['user_id'] = abs(intval(@Get::idDecrypt($_COOKIE['UID']))));
 $user = new User($_SESSION['user_id']);
 $user->id && setcookie('UID', Get::idEncrypt($user->id), time() + 86400 * 365, '/', $_SERVER['HTTP_HOST']);
+$csrf_token = md5(session_id()); // protection from CSRF attack for forms
 
 /** route urls */
 
