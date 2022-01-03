@@ -12,6 +12,7 @@
 + Automatically routed navigation bars to existing php files for users with access
 + Automatically active links in the navbar menu for current urls
 + PHP stack with execution timeout for any Javascript code
++ Protection from CSRF attack for all forms
 + Automatic creation of the user table from the configuration file
 + Backend: PDO MySQL + PHP
 + Frontend: Bootstrap v4.6.0 + JQuery

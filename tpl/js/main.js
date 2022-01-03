@@ -49,3 +49,27 @@ $(document).on("click", "[data-modal]", function (e) {
         "html"
     );
 });
+
+let interactionLock;
+$(window).on("load scroll click focus touchstart mouseenter", function () {
+    if (interactionLock) {
+        return;
+    }
+    interactionLock = Date.now();
+    $(document).trigger("interaction");
+    setTimeout(function () {
+        interactionLock = false;
+    }, 500);
+});
+
+function setCsrfForms() {
+    $("form").each(function () {
+        if ($(this).find("input[name=csrf]").length == 0) {
+            $(this).prepend("<input type=\"hidden\" name=\"csrf\" value=\"" + window.csrf_token + "\">");
+        }
+    });
+}
+
+$(window).on("interaction", function () {
+    setCsrfForms();
+});
