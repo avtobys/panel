@@ -28,3 +28,8 @@ body {
 .form-group .fa-eye-slash {
     cursor: pointer;
 }
+
+.input-group-text>i {
+    min-width: 20px;
+    font-size: 14px;
+}

@@ -18,7 +18,7 @@
                             <div class="input-group">
                                 <input type="password" name="password" class="form-control" placeholder="Password" required>
                                 <div class="input-group-append">
-                                    <span class="input-group-text">
+                                    <span class="input-group-text px-1">
                                         <i class="fas fa-eye-slash"></i>
                                     </span>
                                 </div>
@@ -41,7 +41,7 @@
                             <div class="input-group">
                                 <input type="password" name="password" class="form-control" placeholder="Password" required>
                                 <div class="input-group-append">
-                                    <span class="input-group-text">
+                                    <span class="input-group-text px-1">
                                         <i class="fas fa-eye-slash"></i>
                                     </span>
                                 </div>
@@ -52,7 +52,7 @@
                             <div class="input-group">
                                 <input type="password" name="password2" class="form-control" placeholder="Password repeat" required>
                                 <div class="input-group-append">
-                                    <span class="input-group-text">
+                                    <span class="input-group-text px-1">
                                         <i class="fas fa-eye-slash"></i>
                                     </span>
                                 </div>
@@ -137,7 +137,7 @@
                                 <div class="input-group">
                                     <input type="password" name="password" class="form-control" placeholder="Password" required>
                                     <div class="input-group-append">
-                                        <span class="input-group-text">
+                                        <span class="input-group-text px-1">
                                             <i class="fas fa-eye-slash"></i>
                                         </span>
                                     </div>
@@ -148,7 +148,7 @@
                                 <div class="input-group">
                                     <input type="password" name="password2" class="form-control" placeholder="Password repeat" required>
                                     <div class="input-group-append">
-                                        <span class="input-group-text">
+                                        <span class="input-group-text px-1">
                                             <i class="fas fa-eye-slash"></i>
                                         </span>
                                     </div>
