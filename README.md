@@ -11,8 +11,9 @@
   + route user pages not authorized and authorized (with user navbar)
 + Automatically routed navigation bars to existing php files for users with access
 + Automatically active links in the navbar menu for current urls
-+ PHP stack with execution timeout for any Javascript code
-+ Protection from CSRF attack for all forms
++ PHP stack with execution timeout for any Javascript code (toast messages or any code)
++ Automatically modals confirmations and non confirmations Javascript actions
++ Automatically protection from CSRF attack for all POST forms
 + Automatic creation of the user table from the configuration file
 + Backend: PDO MySQL + PHP
 + Frontend: Bootstrap v4.6.0 + JQuery
