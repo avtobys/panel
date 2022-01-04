@@ -29,10 +29,8 @@ $(".navbar a").each(function (i, el) {
     }
 });
 
-$(document).on("click", "[data-modal]", function (e) {
+$(document).on("click", "[data-modal]:not([data-lock])", function (e) {
     e.preventDefault();
-    if ($(this).attr("lock"))
-        return false;
     $(this).attr("data-lock", 1);
     let id = $(this).data("modal");
     $.get("/api/modal/" + id,
