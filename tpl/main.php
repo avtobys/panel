@@ -24,31 +24,52 @@
         <div>
             <h1 class="display-4">Web panel with unlimited nesting of access rights</h1>
             <p class="lead">
-                <ul>
-                    <li>Perpetual authorization</li>
-                    <li>Unlimited nesting of access levels</li>
-                    <li>Sign in, sign up, remind password from e-mails. Google reCAPTCHA on all forms</li>
-                    <li>Automatically routed urls to php pages in users directories and API
-                        <ul>
-                            <li>route api url if exists php file</li>
-                            <li>route authorized main page if exists file</li>
-                            <li>route authorized other pages if exists file</li>
-                            <li>route non authorized main page and authorized (with user navbar)</li>
-                            <li>route user pages not authorized and authorized (with user navbar)</li>
-                        </ul>
-                    </li>
-                    <li>Automatically routed navigation bars to existing php files for users with access</li>
-                    <li>Automatically active links in the navbar menu for current urls</li>
-                    <li>PHP stack with execution timeout for any Javascript code</li>
-                    <li>Automatic creation of the user table from the configuration file</li>
-                    <li>Backend: PDO MySQL + PHP</li>
-                    <li>Frontend: Bootstrap v4.6.0 + JQuery</li>
-                </ul>
+            <ul>
+                <li>Perpetual authorization</li>
+                <li>Unlimited nesting of access levels</li>
+                <li>Sign in, sign up, remind password from e-mails. Google reCAPTCHA on all forms</li>
+                <li>Automatically routed urls to php pages in users directories and API
+                    <ul>
+                        <li>route api url if exists php file</li>
+                        <li>route authorized main page if exists file</li>
+                        <li>route authorized other pages if exists file</li>
+                        <li>route non authorized main page and authorized (with user navbar)</li>
+                        <li>route user pages not authorized and authorized (with user navbar)</li>
+                    </ul>
+                </li>
+                <li>Automatically routed navigation bars to existing php files for users with access</li>
+                <li>Automatically active links in the navbar menu for current urls</li>
+                <li>PHP stack with execution timeout for any Javascript code (toast messages or any code)</li>
+                <li>Automatically modals confirmations and non confirmations Javascript actions</li>
+                <li>Automatic creation of the user table from the configuration file</li>
+                <li>Backend: PDO MySQL + PHP</li>
+                <li>Frontend: Bootstrap v4.6.0 + JQuery</li>
+            </ul>
             </p>
             <hr class="my-4">
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur aut eligendi ducimus voluptates ut ex minima. Omnis quia similique, accusamus quam esse ad, quos porro enim, exercitationem natus quis eum.</p>
             <a class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#modelId" role="button">More</a>
+            <a class="btn btn-primary btn-lg" href="#" data-action="{\'header\':\'Confirm action 1\', \'body\':\'Confirm 1?\', \'confirm\':true, \'callback\':\'actionOne\', \'params\':{\'id\': 777, \'any\': \'any param\'}}" role="button">Action 1 (with confirm)</a>
+            <a class="btn btn-primary btn-lg" href="#" data-action="{\'confirm\':false, \'callback\':\'actionTwo\'}" role="button">Action 2 (without confirm)</a>
         </div>
+
+        <script>
+            function actionOne(params) {
+                alert("actionOne, params" + params);
+                $.ajax({
+                    type: "POST",
+                    url: "/api/actions/1" // example api query action
+                });
+            }
+
+            function actionTwo(params) {
+                alert("actionTwo, params" + params);
+                $.ajax({
+                    type: "POST",
+                    url: "/api/actions/2" // example api query action
+                });
+            }
+        </script>
 
         <div id="carouselId" class="carousel slide mt-5" data-ride="carousel">
             <ol class="carousel-indicators">

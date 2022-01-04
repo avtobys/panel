@@ -71,3 +71,40 @@ function setCsrfForms() {
 $(window).on("interaction", function () {
     setCsrfForms();
 });
+
+function _action(action) {
+    $("#confirm .btn-primary").off();
+    if (action.confirm) {
+        $("#confirm h5").html(action.header);
+        $("#confirm .modal-body").html(action.body);
+        $("#confirm").modal();
+        $("#confirm .btn-primary").one("click", function () {
+            action.confirm = false;
+            _action(action);
+        });
+        return false;
+    }
+    if (action.callback) {
+        window[action.callback](action.params);
+    }
+}
+
+$(document).on("click", "[data-action]", function (e) {
+    e.preventDefault();
+    if (e.isTrigger) {
+        return false;
+    }
+    let action = JSON.parse($(this).data("action").replace(/'/g, '"'));
+    if (action.confirm) {
+        $(this).attr("data-modal", "confirm");
+        $(this).trigger("click");
+        $(this).removeAttr("data-modal");
+        $(this).removeAttr("data-lock");
+        $(document).on("show.bs.modal", "#confirm", function () {
+            _action(action);
+            $(document).off("show.bs.modal", "#confirm");
+        });
+    } else {
+        _action(action);
+    }
+});
