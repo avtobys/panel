@@ -49,25 +49,25 @@
             <hr class="my-4">
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur aut eligendi ducimus voluptates ut ex minima. Omnis quia similique, accusamus quam esse ad, quos porro enim, exercitationem natus quis eum.</p>
             <a class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#modelId" role="button">More</a>
-            <a class="btn btn-primary btn-lg" href="#" data-action="{\'header\':\'Confirm action 1\', \'body\':\'Confirm 1?\', \'confirm\':true, \'callback\':\'actionOne\', \'params\':{\'id\': 777, \'any\': \'any param\'}}" role="button">Action 1 (with confirm)</a>
-            <a class="btn btn-primary btn-lg" href="#" data-action="{\'confirm\':false, \'callback\':\'actionTwo\'}" role="button">Action 2 (without confirm)</a>
+            <a class="btn btn-primary btn-lg" href="#" data-action="{'header':'Confirm action 1','body':'Confirm 1?','confirm':true,'callback':'actionOne','params':{'id':777,'any':'any param'}}" role="button">Action 1 (with confirm)</a>
+            <a class="btn btn-primary btn-lg" href="#" data-action="{'confirm':false,'callback':'actionTwo'}" role="button">Action 2 (without confirm)</a>
         </div>
 
         <script>
             function actionOne(params) {
-                alert("actionOne, params" + params);
                 $.ajax({
                     type: "POST",
                     url: "/api/actions/1" // example api query action
                 });
+                alert("actionOne send ajax /api/actions/1, params: " + JSON.stringify(params));
             }
 
             function actionTwo(params) {
-                alert("actionTwo, params" + params);
                 $.ajax({
                     type: "POST",
                     url: "/api/actions/2" // example api query action
                 });
+                alert("actionTwo send ajax /api/actions/2, params: " + JSON.stringify(params));
             }
         </script>
 
