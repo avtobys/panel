@@ -3,6 +3,9 @@
         <?= $_BRAND ?>
     </a>
     <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a href="https://github.com/avtobys/panel"><i class="fa fa-github" aria-hidden="true"></i></a>
+        </li>
         <?php if (!$user->id) : ?>
             <li class="nav-item dropdown">
                 <a id="log-in" class="nav-link" href="#">Sign in</a>
