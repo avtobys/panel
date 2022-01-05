@@ -56,20 +56,28 @@
         <script>
             function actionOne(params) {
                 $.ajax({
-                    type: "POST",
-                    url: "/api/actions/1", // example api query action
-                    data: params
-                });
-                alert("actionOne send ajax /api/actions/1, params: " + JSON.stringify(params));
+                        type: "POST",
+                        url: "/api/actions/1", // example api query action
+                        data: params,
+                        dataType: "json"
+                    })
+                    .done(function(data) {
+                        alert(JSON.stringify(data));
+                    });
+
             }
 
             function actionTwo(params) {
                 $.ajax({
-                    type: "POST",
-                    url: "/api/actions/2", // example api query action
-                    data: params
-                });
-                alert("actionTwo send ajax /api/actions/2, params: " + JSON.stringify(params));
+                        type: "POST",
+                        url: "/api/actions/2", // example api query action
+                        data: params,
+                        dataType: "json"
+                    })
+                    .done(function(data) {
+                        alert(JSON.stringify(data));
+                    });
+
             }
         </script>
 
