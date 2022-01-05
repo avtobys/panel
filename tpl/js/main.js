@@ -85,7 +85,9 @@ function _action(action) {
         return false;
     }
     if (action.callback) {
-        action.params && (action.params.csrf = window.csrf_token);
+        action.params ? (action.params.csrf = window.csrf_token) : (action.params = {
+            csrf: window.csrf_token
+        });
         window[action.callback](action.params);
     }
 }
