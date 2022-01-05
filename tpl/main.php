@@ -57,7 +57,8 @@
             function actionOne(params) {
                 $.ajax({
                     type: "POST",
-                    url: "/api/actions/1" // example api query action
+                    url: "/api/actions/1", // example api query action
+                    data: params
                 });
                 alert("actionOne send ajax /api/actions/1, params: " + JSON.stringify(params));
             }
@@ -65,7 +66,8 @@
             function actionTwo(params) {
                 $.ajax({
                     type: "POST",
-                    url: "/api/actions/2" // example api query action
+                    url: "/api/actions/2", // example api query action
+                    data: params
                 });
                 alert("actionTwo send ajax /api/actions/2, params: " + JSON.stringify(params));
             }
