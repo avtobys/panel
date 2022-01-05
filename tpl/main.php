@@ -41,6 +41,7 @@
                 <li>Automatically active links in the navbar menu for current urls</li>
                 <li>PHP stack with execution timeout for any Javascript code (toast messages or any code)</li>
                 <li>Automatically modals confirmations and non confirmations Javascript actions</li>
+                <li>Automatically protection from CSRF attack for all POST forms</li>
                 <li>Automatic creation of the user table from the configuration file</li>
                 <li>Backend: PDO MySQL + PHP</li>
                 <li>Frontend: Bootstrap v4.6.0 + JQuery</li>
