@@ -243,4 +243,3 @@
 </body>
 
 </html>
-<?php ObGetAppend::append(); ?>
