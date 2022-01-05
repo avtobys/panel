@@ -73,12 +73,12 @@ $(window).on("interaction", function () {
 });
 
 function _action(action) {
-    $("#confirm .btn-primary").off();
+    $("#confirm [data-ok]").off();
     if (action.confirm) {
         $("#confirm h5").html(action.header);
         $("#confirm .modal-body").html(action.body);
         $("#confirm").modal();
-        $("#confirm .btn-primary").one("click", function () {
+        $("#confirm [data-ok]").one("click", function () {
             action.confirm = false;
             _action(action);
         });
