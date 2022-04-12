@@ -33,13 +33,13 @@ function apiModal(id) {
     $.get("/api/modal/" + id,
         function (data) {
             if ($("#" + id).length) {
-                $(".modal-backdrop:first").remove();
+                $(".modal-backdrop:last").remove();
                 $("#" + id).remove();
             }
             $("body").append(data);
             $("#" + id).modal();
             $("#" + id).on("hidden.bs.modal", function () {
-                $(".modal:visible").length > $(".modal-backdrop").length && $(".modal-backdrop:first").remove();
+                $(".modal:visible").length > $(".modal-backdrop").length && $(".modal-backdrop:last").remove();
                 $(this).remove();
                 $("[data-modal=" + id + "]").removeAttr("data-lock");
             });
