@@ -29,23 +29,30 @@ $(".navbar a").each(function (i, el) {
     }
 });
 
-$(document).on("click", "[data-modal]:not([data-lock])", function (e) {
-    e.preventDefault();
-    $(this).attr("data-lock", 1);
-    let id = $(this).data("modal");
+function apiModal(id) {
     $.get("/api/modal/" + id,
         function (data) {
-            $("#" + id).remove();
+            if ($("#" + id).length) {
+                $(".modal-backdrop:first").remove();
+                $("#" + id).remove();
+            }
             $("body").append(data);
             $("#" + id).modal();
             $("#" + id).on("hidden.bs.modal", function () {
+                $(".modal:visible").length > $(".modal-backdrop").length && $(".modal-backdrop:first").remove();
                 $(this).remove();
-                $(".modal-backdrop").remove();
                 $("[data-modal=" + id + "]").removeAttr("data-lock");
             });
         },
         "html"
     );
+}
+
+$(document).on("click", "[data-modal]:not([data-lock])", function (e) {
+    e.preventDefault();
+    $(this).attr("data-lock", 1);
+    let id = $(this).data("modal");
+    apiModal(id);
 });
 
 let interactionLock;
