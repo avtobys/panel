@@ -30,16 +30,17 @@ $(".navbar a").each(function (i, el) {
 });
 
 function apiModal(id) {
+    $("[data-modal=" + id + "]").attr("data-lock", 1);
     $.get("/api/modal/" + id,
         function (data) {
             if ($("#" + id).length) {
-                $(".modal-backdrop:last").remove();
+                $("#" + id).next(".modal-backdrop").remove();
                 $("#" + id).remove();
             }
             $("body").append(data);
             $("#" + id).modal();
             $("#" + id).on("hidden.bs.modal", function () {
-                $(".modal:visible").length > $(".modal-backdrop").length && $(".modal-backdrop:last").remove();
+                $(this).next(".modal-backdrop").remove();
                 $(this).remove();
                 $("[data-modal=" + id + "]").removeAttr("data-lock");
             });
@@ -50,8 +51,8 @@ function apiModal(id) {
 
 $(document).on("click", "[data-modal]:not([data-lock])", function (e) {
     e.preventDefault();
-    $(this).attr("data-lock", 1);
     let id = $(this).data("modal");
+    $("[data-modal=" + id + "]").attr("data-lock", 1);
     apiModal(id);
 });
 
