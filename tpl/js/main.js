@@ -34,7 +34,7 @@ function apiModal(id) {
     $.get("/api/modal/" + id,
         function (data) {
             if ($("#" + id).length) {
-                $("#" + id).next(".modal-backdrop").remove();
+                $("#" + id).nextAll(".modal-backdrop:first").remove();
                 $("#" + id).remove();
             }
             $("body").append(data);
