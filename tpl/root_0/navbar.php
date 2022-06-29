@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-gradient-dark shadow sticky-top">
-    <a class="navbar-brand mr-0 mr-md-2" href="/">
+    <a class="navbar-brand mr-0 mr-md-2 text-uppercase" href="/">
         <?= $_BRAND ?>
     </a>
     <button class="navbar-toggler border-0 p-0 dropdown-toggle" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">

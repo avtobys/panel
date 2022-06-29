@@ -9,11 +9,11 @@ const DB_PORT = '3306';
 
 const LANGUAGE_CODE = 'en';
 
-// google recaptcha
-const SITEKEY = 'sitekey_string';
-const SECRETSITEKEY = 'sectret_sitekey_string';
+// hcaptcha sitekey
+const SITEKEY = 'sitekey string';
+const SECRETSITEKEY = 'secret sitekey string';
 
-const EMAIL = 'info@avtobys.com'; // e-mail address From send mail headers
+const EMAIL = 'info@example.com'; // e-mail address From send mail headers
 
 /**
  * replacements

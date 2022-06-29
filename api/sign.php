@@ -4,21 +4,7 @@ header("Cache-Control: no-cache");
 header("Expires: Thu, 01 Jan 1970 00:00:01 GMT");
 header("Content-Type: application/json");
 
-if (!isset($_POST['g-recaptcha-response']) || $user->id) {
-    exit(json_encode(['status' => 'fail']));
-}
-
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_HEADER, false);
-curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'secret= ' . SECRETSITEKEY . '&response=' . $_POST['g-recaptcha-response']);
-curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-$response = curl_exec($ch);
-curl_close($ch);
-if (!$response || json_decode($response)->success != true) {
+if (!Get::hcaptcha($_POST['h-captcha-response']) || $user->id) {
     exit(json_encode(['status' => 'fail']));
 }
 

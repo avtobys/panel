@@ -2,7 +2,7 @@
 
 + Perpetual authorization
 + Unlimited nesting of access levels
-+ Sign in, sign up, remind password from e-mails. Google reCAPTCHA on all forms
++ Sign in, sign up, remind password from e-mails. hCaptcha on this important forms
 + Automatically routed urls to php pages in users directories and API
   + route api url if exists php file
   + route authorized main page if exists file

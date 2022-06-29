@@ -27,7 +27,7 @@
             <ul>
                 <li>Perpetual authorization</li>
                 <li>Unlimited nesting of access levels</li>
-                <li>Sign in, sign up, remind password from e-mails. Google reCAPTCHA on all forms</li>
+                <li>Sign in, sign up, remind password from e-mails. hCaptcha on this important forms</li>
                 <li>Automatically routed urls to php pages in users directories and API
                     <ul>
                         <li>route api url if exists php file</li>
@@ -40,7 +40,7 @@
                 <li>Automatically routed navigation bars to existing php files for users with access</li>
                 <li>Automatically active links in the navbar menu for current urls</li>
                 <li>PHP stack with execution timeout for any Javascript code (toast messages or any code)</li>
-                <li>Automatically modals confirmations and non confirmations Javascript actions</li>
+                <li>Automatically modals confirmations and non confirmations Javascript actions buttons</li>
                 <li>Automatically protection from CSRF attack for all POST forms</li>
                 <li>Automatic creation of the user table from the configuration file</li>
                 <li>Backend: PDO MySQL + PHP</li>
@@ -48,37 +48,24 @@
             </ul>
             </p>
             <hr class="my-4">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur aut eligendi ducimus voluptates ut ex minima. Omnis quia similique, accusamus quam esse ad, quos porro enim, exercitationem natus quis eum.</p>
+            <h5>Usage actions buttons:</h5>
+            <pre>add to buttons attributes:
+data-action="1" - required, is filename action in directory /api/actions
+data-confirm="true" - true if confirm modal action added / false - without confirmation modal
+data-header="Header modal action"
+data-body="Body modal action"
+data-callback="callbackFunction" - action callback function with arguments (response, data)
+data-anyparam1="any param 1"
+data-anyparam2="any param 2"
+            </pre>
             <a class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#modelId" role="button">More</a>
-            <a class="btn btn-primary btn-lg" href="#" data-action="{'header':'Confirm action 1','body':'Confirm 1?','confirm':true,'callback':'actionOne','params':{'id':777,'any':'any param'}}" role="button">Action 1 (with confirm)</a>
-            <a class="btn btn-primary btn-lg" href="#" data-action="{'confirm':false,'callback':'actionTwo'}" role="button">Action 2 (without confirm)</a>
+            <a class="btn btn-primary btn-lg" href="#" data-action="1" data-confirm="true" data-header="Header modal action 1" data-body="Body modal action 1" data-callback="callbackFunction" data-anyparam1="any param 1" data-anyparam2="any param 2" role="button">Action 1 (with confirm)</a>
+            <a class="btn btn-primary btn-lg" href="#" data-action="2" data-callback="callbackFunction" data-anyparam1="any param 1" data-anyparam2="any param 2" role="button">Action 2 (without confirm)</a>
         </div>
 
         <script>
-            function actionOne(params) {
-                $.ajax({
-                        type: "POST",
-                        url: "/api/actions/1", // example api query action
-                        data: params,
-                        dataType: "json"
-                    })
-                    .done(function(data) {
-                        alert(JSON.stringify(data));
-                    });
-
-            }
-
-            function actionTwo(params) {
-                $.ajax({
-                        type: "POST",
-                        url: "/api/actions/2", // example api query action
-                        data: params,
-                        dataType: "json"
-                    })
-                    .done(function(data) {
-                        alert(JSON.stringify(data));
-                    });
-
+            function callbackFunction(response) {
+                alert(JSON.stringify(response));
             }
         </script>
 

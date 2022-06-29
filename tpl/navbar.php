@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand navbar-dark bg-gradient-dark shadow sticky-top">
-    <a class="navbar-brand mr-0 mr-md-2" href="/">
+    <a class="navbar-brand mr-0 mr-md-2 text-uppercase" href="/">
         <?= $_BRAND ?>
     </a>
     <ul class="navbar-nav ml-auto">
@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label>Password</label>
                             <div class="input-group">
-                                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                                <input type="password" name="password" class="form-control" placeholder="Password" minlength="6" required>
                                 <div class="input-group-append">
                                     <span class="input-group-text px-1">
                                         <i class="fas fa-eye-slash"></i>
@@ -53,7 +53,7 @@
                         <div class="form-group position-relative">
                             <label>Password repeat</label>
                             <div class="input-group">
-                                <input type="password" name="password2" class="form-control" placeholder="Password repeat" required>
+                                <input type="password" name="password2" class="form-control" placeholder="Password repeat" minlength="6" required>
                                 <div class="input-group-append">
                                     <span class="input-group-text px-1">
                                         <i class="fas fa-eye-slash"></i>
@@ -102,7 +102,7 @@
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <div id="captcha" data-sitekey="<?= SITEKEY ?>" style="width:304px;margin:auto;"></div>
+                    <div id="hcaptcha-render"></div>
                 </div>
             </div>
         </div>
@@ -138,7 +138,7 @@
                             <div class="form-group position-relative">
                                 <label>New password</label>
                                 <div class="input-group">
-                                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                                    <input type="password" name="password" class="form-control" placeholder="Password" minlength="6" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text px-1">
                                             <i class="fas fa-eye-slash"></i>
@@ -149,7 +149,7 @@
                             <div class="form-group position-relative">
                                 <label>Password repeat</label>
                                 <div class="input-group">
-                                    <input type="password" name="password2" class="form-control" placeholder="Password repeat" required>
+                                    <input type="password" name="password2" class="form-control" placeholder="Password repeat" minlength="6" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text px-1">
                                             <i class="fas fa-eye-slash"></i>
@@ -168,34 +168,37 @@
 
     <script>
         window.addEventListener("DOMContentLoaded", function() {
-            var s = document.createElement("script");
-            s.src = "//www.google.com/recaptcha/api.js?onload=onloadCaptchaCallback&render=explicit&hl=<?= LANGUAGE_CODE ?>";
-            document.head.appendChild(s);
+            ! function() {
+                window.hcaptchaRender = function() {
+                    hcaptcha.render('hcaptcha-render', {
+                        sitekey: '<?= SITEKEY ?>',
+                        'callback': verifyCallback
+                    });
+                }
 
-            window.onloadCaptchaCallback = function() {
-                $(document).on("submit", "#sign-menu form", function(e) {
-                    e.preventDefault();
-                    window.signData = $(this).serialize();
-                    $("#log-in").trigger("click");
-                    $("#captcha-modal").modal();
-                    if ($("#captcha").html()) {
-                        grecaptcha.reset();
-                    } else {
-                        grecaptcha.render('captcha', {
-                            'sitekey': '<?= SITEKEY ?>',
-                            'callback': verifyCallback,
-                            'theme': 'light'
-                        });
-                    }
-                });
+                if (!$("script[src*=hcaptcha]").length) {
+                    var s = document.createElement("script");
+                    s.src = "//js.hcaptcha.com/1/api.js?hl=en&onload=hcaptchaRender&render=explicit";
+                    document.head.appendChild(s);
+                }
+            }();
 
-            }
+            $(document).on("submit", "#sign-menu form", function(e) {
+                e.preventDefault();
+                window.signData = $(this).serialize();
+                $("#log-in").trigger("click");
+                $("#captcha-modal").modal();
+                hcaptcha.reset();
+            });
+        });
 
+
+        window.addEventListener("DOMContentLoaded", function() {
             window.verifyCallback = function(token) {
                 $.ajax({
                         type: "POST",
                         url: "/api/sign",
-                        data: window.signData + "&g-recaptcha-response=" + token,
+                        data: window.signData + "&h-captcha-response=" + token,
                         dataType: "json"
                     })
                     .done(response => {

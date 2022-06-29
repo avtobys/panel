@@ -29,8 +29,8 @@ $(".navbar a").each(function (i, el) {
     }
 });
 
-function apiModal(id) {
-    $("[data-modal=" + id + "]").attr("data-lock", 1);
+function apiModal(id, callback) {
+    $("[data-modal=" + id + "]").attr("disabled", 1);
     $.get("/api/modal/" + id,
         function (data) {
             if ($("#" + id).length) {
@@ -38,21 +38,28 @@ function apiModal(id) {
                 $("#" + id).remove();
             }
             $("body").append(data);
+            callback && callback();
             $("#" + id).modal();
             $("#" + id).on("hidden.bs.modal", function () {
                 $(this).next(".modal-backdrop").remove();
                 $(this).remove();
-                $("[data-modal=" + id + "]").removeAttr("data-lock");
+                $("[data-modal=" + id + "]").removeAttr("disabled");
             });
         },
         "html"
-    );
+    ).fail(function () {
+        setTimeout(function () {
+            apiModal(id, callback);
+        }, 1000);
+    }).always(function () {
+        $("[data-modal=" + id + "]").removeAttr("disabled");
+    });
 }
 
-$(document).on("click", "[data-modal]:not([data-lock])", function (e) {
+$(document).on("click", "[data-modal]:not([disabled])", function (e) {
     e.preventDefault();
     let id = $(this).data("modal");
-    $("[data-modal=" + id + "]").attr("data-lock", 1);
+    $("[data-modal=" + id + "]").attr("disabled", 1);
     apiModal(id);
 });
 
@@ -80,42 +87,41 @@ $(window).on("interaction", function () {
     setCsrfForms();
 });
 
-function _action(action) {
-    $("#confirm [data-ok]").off();
-    if (action.confirm) {
-        $("#confirm h5").html(action.header);
-        $("#confirm .modal-body").html(action.body);
-        $("#confirm").modal();
-        $("#confirm [data-ok]").one("click", function () {
-            action.confirm = false;
-            _action(action);
-        });
-        return false;
-    }
-    if (action.callback) {
-        action.params ? (action.params.csrf = window.csrf_token) : (action.params = {
-            csrf: window.csrf_token
-        });
-        window[action.callback](action.params);
-    }
+function _action(data, callback) {
+    data.csrf = window.csrf_token;
+    $.ajax({
+        type: "POST",
+        url: "/api/actions/" + data.action,
+        data: data,
+        dataType: "json"
+    }).done(function (response) {
+        if (data.callback) {
+            window[data.callback](response);
+        }
+    }).always(function () {
+        callback && callback();
+    });
 }
 
-$(document).on("click", "[data-action]", function (e) {
+
+$(document).on("click", "[data-action]:not([disabled])", function (e) {
     e.preventDefault();
-    if (e.isTrigger) {
-        return false;
-    }
-    let action = JSON.parse($(this).data("action").replace(/'/g, '"'));
-    if (action.confirm) {
-        $(this).attr("data-modal", "confirm");
-        $(this).trigger("click");
-        $(this).removeAttr("data-modal");
-        $(this).removeAttr("data-lock");
-        $(document).on("show.bs.modal", "#confirm", function () {
-            _action(action);
-            $(document).off("show.bs.modal", "#confirm");
+    let button = $(this);
+    button.attr("disabled", 1);
+    let data = $(this).data();
+    if (data.confirm) {
+        apiModal("confirm", function () {
+            $("#confirm h5").html(data.header);
+            $("#confirm .modal-body").html(data.body);
+            $("#confirm [data-ok]").off();
+            $("#confirm [data-ok]").one("click", function () {
+                _action(data);
+            });
+            button.removeAttr("disabled");
         });
     } else {
-        _action(action);
+        _action(data, function () {
+            button.removeAttr("disabled");
+        });
     }
 });
