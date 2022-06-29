@@ -26,15 +26,24 @@ if (!empty($sql_create_table_users) && !$dbh->query("SHOW TABLES LIKE 'users'")-
 }
 
 
-/** user session */
-$_SESSION['user_id'] = empty($_SESSION['user_id']) ? 0 : $_SESSION['user_id'];
-$_SESSION['user_id'] && !empty($_COOKIE['UID']) && ($_SESSION['user_id'] = abs(intval(@Get::idDecrypt($_COOKIE['UID']))));
-$user = new User($_SESSION['user_id']);
-$user->id && setcookie('UID', Get::idEncrypt($user->id), time() + 86400 * 365, '/', $_SERVER['HTTP_HOST']);
 $csrf_token = md5(session_id()); // protection from CSRF attack for forms
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && (empty($_POST['csrf']) || $_POST['csrf'] != $csrf_token)) {
     exit('Invalid csrf!');
 }
+
+/** user session */
+$_SESSION['user_id'] = empty($_SESSION['user_id']) ? 0 : $_SESSION['user_id'];
+$_SESSION['user_id'] && !empty($_COOKIE['UID']) && ($_SESSION['user_id'] = abs(intval(@Get::idDecrypt($_COOKIE['UID']))));
+$user = new User($_SESSION['user_id']);
+$user->id &&
+    setcookie('UID', Get::idEncrypt($user->id), [
+        'expires' => time() + 31536000,
+        'path' => '/',
+        'domain' => $_SERVER['HTTP_HOST'],
+        'secure' => Get::isSecure(),
+        'httponly' => false,
+        'samesite' => 'None'
+    ]);
 
 /** route urls */
 
@@ -42,7 +51,14 @@ $request = strtok($_SERVER['REQUEST_URI'], '?');
 
 if ($_SESSION['user_id'] && (!$user->id || ($request == '/exit' && isset($_GET['s']) && $_GET['s'] == session_id()))) { // reset authorization
     unset($_SESSION['user_id']);
-    setcookie('UID', false, time() - 86400 * 365, '/', $_SERVER['HTTP_HOST']);
+    setcookie('UID', false, [
+        'expires' => time() - 31536000,
+        'path' => '/',
+        'domain' => $_SERVER['HTTP_HOST'],
+        'secure' => Get::isSecure(),
+        'httponly' => false,
+        'samesite' => 'None'
+    ]);
     header("Location: /");
     exit;
 }

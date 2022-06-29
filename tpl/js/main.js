@@ -1,11 +1,11 @@
 'use strict';
 
-function toast(header, mess) {
+function toast(header, mess, timeout = 5000) {
     let id = "toast" + Date.now();
     $("#toast").append('<div id="' + id + '" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false" data-animation="true">\
     <div class="toast-header">\
         <strong class="mr-auto">' + header + '</strong>\
-        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Закрыть">\
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">\
             <span aria-hidden="true">&times;</span>\
         </button>\
     </div>\
@@ -14,7 +14,7 @@ function toast(header, mess) {
     $("#" + id).toast("show");
     setTimeout(function () {
         $("#" + id).toast("hide");
-    }, 5000);
+    }, timeout);
     $("#" + id).on("hidden.bs.toast", function () {
         $(this).remove();
     });

@@ -48,7 +48,7 @@
             </ul>
             </p>
             <hr class="my-4">
-            <h5>Usage actions buttons:</h5>
+            <h5>Usage actions api buttons:</h5>
             <pre>add to buttons attributes:
 data-action="1" - required, is filename action in directory /api/actions
 data-confirm="true" - true if confirm modal action added / false - without confirmation modal
@@ -58,9 +58,21 @@ data-callback="callbackFunction" - action callback function with arguments (resp
 data-anyparam1="any param 1"
 data-anyparam2="any param 2"
             </pre>
-            <a class="btn btn-primary btn-lg" href="#" data-toggle="modal" data-target="#modelId" role="button">More</a>
             <a class="btn btn-primary btn-lg" href="#" data-action="1" data-confirm="true" data-header="Header modal action 1" data-body="Body modal action 1" data-callback="callbackFunction" data-anyparam1="any param 1" data-anyparam2="any param 2" role="button">Action 1 (with confirm)</a>
             <a class="btn btn-primary btn-lg" href="#" data-action="2" data-callback="callbackFunction" data-anyparam1="any param 1" data-anyparam2="any param 2" role="button">Action 2 (without confirm)</a>
+            <hr class="my-4">
+            <h5>Usage modal api buttons:</h5>
+            <pre>Api modal can be called in two ways:
+1. add to button/link attribute with id modal data-modal="id-modal"
+2. call to js function apiModal("id-modal");
+            </pre>
+            <a class="btn btn-primary btn-lg" href="#" data-modal="example-modal" role="button">Example api modal</a>
+            <hr class="my-4">
+            <h5>Usage toast api:</h5>
+            <pre>Toast called to js function:
+toast(header, mess, timeout = 5000);
+            </pre>
+            <a class="btn btn-primary btn-lg" href="#" onclick="toast('Header toast', 'Message toast');return false;" role="button">Example toast onclick</a>
         </div>
 
         <script>
@@ -200,27 +212,6 @@ data-anyparam2="any param 2"
                 </div>
             </div>
         </footer>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">More</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    More
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
-                </div>
-            </div>
-        </div>
     </div>
 
 
